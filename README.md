@@ -1,8 +1,8 @@
 <h1 align="center">
 <img height=250 src=resources/images/snake_logo.png />
-<br>
+
 PySQLRecon
-<br>
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![PyPi](https://img.shields.io/pypi/v/pysqlrecon?style=for-the-badge)
 </h1>
@@ -69,7 +69,7 @@ Target execution of a PySQLRecon command on a linked server (instead of the SQL 
 
 Impersonate a user account while running a PySQLRecon command with the `--impersonate` flag.
 
-`--link` and `--impersonate` and not compatible when used together,
+`--link` and `--impersonate` and not compatible when used together.
 
 
 ## Development
