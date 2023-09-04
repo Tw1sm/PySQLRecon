@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pysqlrecon"
 version = "0.1.0"
-description = ""
+description = "Offensive MSSQL Python toolkit"
 authors = ["Matt Creel <mcreel31@gmail.com>"]
 readme = "README.md"
 homepage = "https://github.com/tw1sm/pysqlrecon"
