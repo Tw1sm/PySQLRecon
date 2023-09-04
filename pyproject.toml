@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "pysqlrecon"
+version = "0.1.0"
+description = ""
+authors = ["Matt Creel <mcreel31@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/tw1sm/pysqlrecon"
+repository = "https://github.com/tw1sm/pysqlrecon"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+rich = "^12.5.1"
+typer = "^0.6.1"
+impacket = "^0.11.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.235"
+pytest = "^7.2.1"
+pre-commit = "^3.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+ignore = ["E501"]
+
+[tool.poetry.scripts]
+pysqlrecon = "pysqlrecon.__main__:app"

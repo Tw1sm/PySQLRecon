@@ -1,0 +1,4 @@
+repos:
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  hooks:
+  - id: ruff
