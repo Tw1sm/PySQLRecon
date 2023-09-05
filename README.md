@@ -55,7 +55,7 @@ pysqlrecon [GLOBAL_OPTS] COMMAND [COMMAND_OPTS]
 
 View global options:
 ```
-pysqlreocn --help
+pysqlrecon --help
 ```
 
 View command specific options:
@@ -69,8 +69,7 @@ Target execution of a PySQLRecon command on a linked server (instead of the SQL 
 
 Impersonate a user account while running a PySQLRecon command with the `--impersonate` flag.
 
-`--link` and `--impersonate` and not compatible when used together.
-
+`--link` and `--impersonate` and incompatible.
 
 ## Development
 pysqlrecon uses Poetry to manage dependencies. Install from source and setup for development with:
@@ -83,6 +82,10 @@ poetry run pysqlrecon --help
 
 ### Adding a Command
 PySQLRecon is easily extensible - see the template and instructions in [resources](resources/command_template/)
+
+### TODO
+- [ ] Add SQLRecon SCCM commands
+- [ ] Add Azure SQL DB support?
 
 ## References and Credits
 - [Impacket](https://github.com/fortra/impacket)
