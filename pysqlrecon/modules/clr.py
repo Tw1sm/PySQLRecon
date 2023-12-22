@@ -4,6 +4,7 @@ import random
 from pathlib import Path
 from hashlib import sha512
 
+from pysqlrecon.lib.exceptions import DuplicateAssemblyError
 from pysqlrecon.logger import logger
 from pysqlrecon.lib import PySqlRecon
 
@@ -86,7 +87,8 @@ def main(
 
     #####
     # Create the custom assembly
-    pysqlrecon.create_asm(asm_name, dll_bytes)
+    create_assembly(pysqlrecon, asm_name, dll_bytes, function)
+    
     if not pysqlrecon.check_assembly(asm_name):
         logger.error("Failed to create custom assembly")
         logger.info("Cleaning up...")
@@ -122,4 +124,21 @@ def main(
     pysqlrecon.delete_tasm_resources(asm_name, function)
 
     pysqlrecon.disconnect()
-    
+
+
+# recursive func to create assembly and handle duplicate assmebly error by deleting and re-creating
+#   fix for https://github.com/Tw1sm/PySQLRecon/issues/1
+def create_assembly(pysqlrecon, asm_name, dll_bytes, function):
+    try:
+        pysqlrecon.create_asm(asm_name, dll_bytes)
+
+    except DuplicateAssemblyError as e:
+        logger.warning("Duplicate assembly detected - will try to delete and re-create")
+        
+        pysqlrecon.delete_tasm_resources(e.assembly_name, function)
+        logger.info(f"Deleted the offending duplicate assembly '{e.assembly_name}'")
+
+        logger.info(f"Attempting to re-create assembly with name '{asm_name}'")
+        pysqlrecon.create_asm(asm_name, dll_bytes)
+
+        
