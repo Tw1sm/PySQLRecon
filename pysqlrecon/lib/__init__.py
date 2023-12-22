@@ -2,6 +2,7 @@ from impacket import tds
 from typing import Any
 from rich.table import Table
 
+from pysqlrecon.lib.exceptions import DuplicateAssemblyError
 from pysqlrecon.logger import logger, console
 from pysqlrecon.lib.sqlagent import SqlAgentMixin
 from pysqlrecon.lib.clr import ClrMixin
@@ -10,6 +11,10 @@ from pysqlrecon.lib.query import QueryMixin
 
 
 class PySqlRecon(SqlAgentMixin, ClrMixin, ModuleMixin, QueryMixin):
+
+    # https://learn.microsoft.com/en-us/sql/relational-databases/errors-events/database-engine-events-and-errors-6000-to-6999?view=sql-server-ver16
+    DUPLICATE_ASM_ERROR = 6285
+
 
     def __init__(self, target, domain, username, password, port, link, impersonate,
                     db, hashes, aesKey, kerberos, no_pass, dc_ip, windows_auth) -> None:
@@ -205,9 +210,15 @@ class PySqlRecon(SqlAgentMixin, ClrMixin, ModuleMixin, QueryMixin):
         for keys in list(self.ms_sql.replies.keys()):
             for i, key in enumerate(self.ms_sql.replies[keys]):
                 if key['TokenType'] == tds.TDS_ERROR_TOKEN:
+                    error_num = key['Number']
                     error =  "(%s): Line %d: %s" % (key['ServerName'].decode('utf-16le'), key['LineNumber'], key['MsgText'].decode('utf-16le'))                                      
                     self.lastError = tds.SQLErrorException("ERROR: Line %d: %s" % (key['LineNumber'], key['MsgText'].decode('utf-16le')))
                     logger.error(error)
+
+                    # handle duplicate assembly error
+                    if error_num == PySqlRecon.DUPLICATE_ASM_ERROR:
+                        raise DuplicateAssemblyError(error)
+                    
                     exit()
 
                 elif key['TokenType'] == tds.TDS_INFO_TOKEN:
