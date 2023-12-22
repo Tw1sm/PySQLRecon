@@ -17,8 +17,8 @@ IMPERSONATE_COMPATIBLE = True
 @app.callback(invoke_without_command=True)
 def main(
     ctx: typer.Context,
-    dll: Path = typer.Option(None, "--dll", dir_okay=False, readable=True, help=".NET DLL to load into stored procedure"),
-    function: str = typer.Option(None, "--function", help="Function within .NET DLL to execute")):
+    dll: Path = typer.Option(..., "--dll", dir_okay=False, readable=True, help=".NET DLL to load into stored procedure"),
+    function: str = typer.Option(..., "--function", help="Function within .NET DLL to execute")):
     
     pysqlrecon: PySqlRecon = ctx.obj['pysqlrecon']
 
