@@ -39,19 +39,32 @@ def main(ctx: typer.Context):
     pysqlrecon.query_handler("SELECT USER_NAME();")
     logger.info(f"Mapped to the user [cyan]{pysqlrecon.get_last_resp()}[/]", extra=OBJ_EXTRA_FMT)
 
+    logger.info("Gathering roles:")
     pysqlrecon.query_handler("SELECT [name] FROM sysusers WHERE issqlrole = 1;")
     roles = [row['name'] for row in pysqlrecon.ms_sql.rows]
-    roles.extend(DEFAULT_ROLES)
     
-    logger.info("Gathering roles:")
+    logger.debug(f"Identified {len(roles)} database roles")
+    logger.debug(f"Roles: {roles}")
+    
     print()
-    
+
+    # db-specific roles    
     for role in roles:
+        pysqlrecon.query_handler(f"SELECT IS_MEMBER('{role}');")
+        check_role(role, pysqlrecon.get_last_resp())
+
+    # check server roles
+    for role in DEFAULT_ROLES:
         pysqlrecon.query_handler(f"SELECT IS_SRVROLEMEMBER('{role}');")
-        if pysqlrecon.get_last_resp() == 1:
-            console.print(f"{' |->':>15} User is a member of the [green]{role}[/] role")
-        else:
-            console.print(f"{' |->':>15} User is NOT a member of the [red]{role}[/] role")
-    
+        check_role(role, pysqlrecon.get_last_resp())
+
+
     print()
     pysqlrecon.disconnect()
+
+
+def check_role(role, last_resp):
+    if last_resp == 1:
+        console.print(f"{' |->':>15} User is a member of the [green]{role}[/] role")
+    else:
+        console.print(f"{' |->':>15} User is NOT a member of the [red]{role}[/] role")
