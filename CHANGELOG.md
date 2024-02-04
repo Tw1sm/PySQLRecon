@@ -1,4 +1,9 @@
 # Changelog
+## [v0.1.4] - 02/03/2024
+### Fixed
+- Issue [#9](https://github.com/Tw1sm/PySQLRecon/issues/9)
+- `search`, `columns` and `rows` modules now appropriately use linked rpc queries - these modules would previously fail
+
 ## [v0.1.3] - 12/30/2023
 ### Fixed
 - Issue [#3](https://github.com/Tw1sm/PySQLRecon/issues/3)

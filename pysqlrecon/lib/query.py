@@ -5,11 +5,14 @@ class QueryMixin:
 
     # basic query handler for simple commands like
     #  whoami, databases, columns, users, etc.
-    def query_handler(self, query) -> None:
+    def query_handler(self, query, use_rpc_query=False) -> None:
         try:
             # execute linked query
             if self.link is not None:
-                self.exec_lquery(query)
+                if use_rpc_query and self.check_rpc_on_link(self.link):
+                    self.exec_lquery_rpc(query)
+                else:
+                    self.exec_lquery(query)
 
             # execute impersonation query
             elif self.impersonate is not None:

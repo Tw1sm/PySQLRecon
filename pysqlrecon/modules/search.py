@@ -34,10 +34,14 @@ def main(
     else:
         logger.info(f"Searching for columns containing '{keyword}' in '{pysqlrecon.db}' on {pysqlrecon.target}")
     
-    query = "SELECT table_name, column_name " \
+    if pysqlrecon.link:
+        query = "SELECT table_name, column_name " \
+            f"FROM {pysqlrecon.db}.INFORMATION_SCHEMA.COLUMNS WHERE column_name LIKE '%{keyword}%';"
+    else:
+        query = "SELECT table_name, column_name " \
             f"FROM INFORMATION_SCHEMA.COLUMNS WHERE column_name LIKE '%{keyword}%';"
 
-    pysqlrecon.query_handler(query)
+    pysqlrecon.query_handler(query, use_rpc_query=True)
     pysqlrecon.print_results(use_basic_tables)
 
     pysqlrecon.disconnect()

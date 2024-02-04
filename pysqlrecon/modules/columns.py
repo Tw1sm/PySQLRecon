@@ -38,7 +38,7 @@ def main(
              "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS " \
              f"WHERE TABLE_NAME = '{table}' ORDER BY ORDINAL_POSITION;"
 
-    pysqlrecon.query_handler(query)
+    pysqlrecon.query_handler(query, use_rpc_query=True)
     pysqlrecon.print_results(use_basic_tables)
 
     pysqlrecon.disconnect()
