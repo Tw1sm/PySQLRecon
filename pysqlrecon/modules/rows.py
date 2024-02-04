@@ -35,7 +35,7 @@ def main(
         logger.info(f"Getting row count of table '{table}' in '{pysqlrecon.db}' on {pysqlrecon.target}")
     
     query = f"use {pysqlrecon.db}; SELECT COUNT(*) as row_count FROM {table};"
-    pysqlrecon.query_handler(query)
+    pysqlrecon.query_handler(query, use_rpc_query=True)
     pysqlrecon.print_results(use_basic_tables)
 
     pysqlrecon.disconnect()
