@@ -5,7 +5,7 @@ from pysqlrecon.lib import PySqlRecon
 
 app = typer.Typer()
 COMMAND_NAME = "search"
-HELP = "[bright_black][NORM][/] Keyword search column names forx all tables within a database [I,L]"
+HELP = "[bright_black][NORM][/] Keyword search column names for all tables within a database [I,L]"
 LINK_COMPATIBLE = True
 IMPERSONATE_COMPATIBLE = True
 
