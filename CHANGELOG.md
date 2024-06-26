@@ -1,4 +1,9 @@
 # Changelog
+## [v0.2.0] - 06/26/2024
+### Added
+- `sample` module to retrive table data without manual SQL query
+
+
 ## [v0.1.4] - 02/03/2024
 ### Fixed
 - Issue [#9](https://github.com/Tw1sm/PySQLRecon/issues/9)
