@@ -42,6 +42,7 @@ def main(ctx: typer.Context):
     else:
         logger.info(f"Disabling xp_cmdshell on {pysqlrecon.target}")
         pysqlrecon.module_toggle("xp_cmdshell", "0")
-        pysqlrecon.check_module("xp_cmdshell", show=True)
+        pysqlrecon.check_module("xp_cmdshell")
+        pysqlrecon.print_results(use_basic_tables)
 
     pysqlrecon.disconnect()
