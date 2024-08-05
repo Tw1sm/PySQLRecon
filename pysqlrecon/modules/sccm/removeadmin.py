@@ -28,6 +28,9 @@ def main(
     ):
         exit()
 
+    if pysqlrecon.db == 'master':
+        logger.warning("You likely need to specify the CM_[SITE] database")
+
     rm_account = True if "00000000|00000000" in permissions else False
 
     values = ''

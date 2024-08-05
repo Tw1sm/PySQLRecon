@@ -5,7 +5,7 @@ from pysqlrecon.lib import PySqlRecon
 
 app = typer.Typer()
 COMMAND_NAME = "addadmin"
-HELP = "[red][PRIV][/] Elevate an account to the Full Administrator [I]"
+HELP = "[red][PRIV][/] Elevate an account to Full Administrator [I]"
 LINK_COMPATIBLE = False
 IMPERSONATE_COMPATIBLE = True
 
@@ -27,6 +27,9 @@ def main(
         pysqlrecon.impersonate
     ):
         exit()
+
+    if pysqlrecon.db == 'master':
+        logger.warning("You likely need to specify the CM_[SITE] database")
 
     #
     # Validate username format
@@ -101,6 +104,14 @@ def main(
             logger.warning(f"{user} already has Full Administrator permissions")
             pysqlrecon.disconnect()
             exit()
+
+        existing_privs = ""
+        if sms00all : existing_privs += "SMS00ALL|SMS0001R,"
+        if sms0004  : existing_privs += "SMS00004|SMS0001R,"
+        if sms0001  : existing_privs += "SMS00001|SMS0001R,"
+
+        if existing_privs != "":
+            logger.info(f"Restore original permissions with pysqlrecon [OPTIONS] sccm removeadmin --user {id} --permissions '{existing_privs[:-1]}'")
 
     #
     # No entries found, add new entry

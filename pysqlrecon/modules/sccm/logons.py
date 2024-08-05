@@ -28,6 +28,9 @@ def main(
     ):
         exit()
 
+    if pysqlrecon.db == 'master':
+        logger.warning("You likely need to specify the CM_[SITE] database")
+
     pysqlrecon.connect()
 
     logger.info("Querying clients and last logged on users")
