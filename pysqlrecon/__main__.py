@@ -45,7 +45,7 @@ def main(
     
     # Misc Options
     debug: bool = typer.Option(False, '--debug', help='Turn DEBUG output ON', rich_help_panel='Misc Options'),
-    basic_tables: bool = typer.Option(False, '--basic-tables', help='Use simple ASCII table output', rich_help_panel='Misc Options'),
+    basic_tables: bool = typer.Option(False, '--basic-tables', help='Use simple ASCII table output (avoids truncation)', rich_help_panel='Misc Options'),
     quiet: bool = typer.Option(False, '--quiet', help='Hide the banner', rich_help_panel='Misc Options')):
 
     if not quiet:
