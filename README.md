@@ -85,7 +85,7 @@ poetry run pysqlrecon --help
 PySQLRecon is easily extensible - see the template and instructions in [resources](resources/command_template/)
 
 ### TODO
-- [ ] Add SQLRecon SCCM commands
+- [x] Add SQLRecon SCCM commands
 - [ ] Add Azure SQL DB support?
 
 ## References and Credits
@@ -94,3 +94,4 @@ PySQLRecon is easily extensible - see the template and instructions in [resource
 - [https://securityintelligence.com/x-force/databases-beware-abusing-microsoft-sql-server-with-sqlrecon/](https://securityintelligence.com/x-force/databases-beware-abusing-microsoft-sql-server-with-sqlrecon/)
 - [https://gist.github.com/skahwah/a585e176e4a5cf319b0c759637f5c410](https://gist.github.com/skahwah/a585e176e4a5cf319b0c759637f5c410)
 - Also checkout [MSSqlPwner](https://github.com/ScorpionesLabs/MSSqlPwner) for other offensive MSSQL capabilities written in Python
+- [PXETheif](https://github.com/MWR-CyberSec/PXEThief)

@@ -1,4 +1,16 @@
 # Changelog
+## [v0.3.0] - 08/05/2024
+### Added
+- SCCM modules from [SQLRecon](https://github.com/skahwah/SQLRecon?tab=readme-ov-file#sccm-modules)
+    - `addadmin`
+    - `credentials`
+    - `logons`
+    - `removeadmin`
+    - `sites`
+    - `taskdata`
+    - `tasklist`
+    - `users`
+
 ## [v0.2.1] - 07/26/2024
 ### Fixed
 - Issue [#12](https://github.com/Tw1sm/PySQLRecon/issues/12)
