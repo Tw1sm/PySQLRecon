@@ -15,7 +15,7 @@ __all__ = [
 ]
 
 COMMAND_NAME = "sccm"
-HELP = "Submodule for SCCM specific commands"
+HELP = "[blue][SUBM][/] Submodule for SCCM specific commands"
 
 
 app = typer.Typer(add_completion=False,

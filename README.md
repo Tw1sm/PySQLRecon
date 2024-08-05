@@ -39,13 +39,27 @@ links                [NORM] Enumerate linked servers [I,L]
 olecmd               [PRIV] Execute a system command using OLE automation procedures [I,L]
 query                [NORM] Execute a custom SQL query [I,L]
 rows                 [NORM] Get the count of rows in a table [I,L]
-sample               [NORM] Query a sample of table data [I,L]   
+sample               [NORM] Query a sample of table data [I,L]
+sccm                 [SUBM] Submodule for SCCM specific commands   
 search               [NORM] Search a table for a column name [I,L]
 smb                  [NORM] Coerce NetNTLM auth via xp_dirtree [I,L]
 tables               [NORM] Enumerate tables within a database [I,L]
 users                [NORM] Enumerate users with database access [I,L]
 whoami               [NORM] Gather logged in user, mapped user and roles [I,L]
 xpcmd                [PRIV] Execute a system command using xp_cmdshell [I,L]     
+```
+
+### SCCM Commands
+SCCM commands can be found by running `pysqlrecon [OPTIONS] sccm -h` (required global flags will need to be specified for this to work - see [usage](#usage))
+```
+addadmin             [PRIV] Elevate an account to Full Administrator [I]
+credentials          [NORM] Display encrypted credentials [I]
+logons               [NORM] Display SCCM clients and last logged on user [I]
+removeadmin          [PRIV] Remove elevated account or elevated privileges [I]
+sites                [NORM] Gather SCCM site info [I]
+taskdata             [NORM] Decrypt task sequences [I]
+tasklist             [NORM] Display task sequences [I]
+users                [NORM] Enumerate SCCM users [I]   
 ```
 
 ## Usage
@@ -94,4 +108,4 @@ PySQLRecon is easily extensible - see the template and instructions in [resource
 - [https://securityintelligence.com/x-force/databases-beware-abusing-microsoft-sql-server-with-sqlrecon/](https://securityintelligence.com/x-force/databases-beware-abusing-microsoft-sql-server-with-sqlrecon/)
 - [https://gist.github.com/skahwah/a585e176e4a5cf319b0c759637f5c410](https://gist.github.com/skahwah/a585e176e4a5cf319b0c759637f5c410)
 - Also checkout [MSSqlPwner](https://github.com/ScorpionesLabs/MSSqlPwner) for other offensive MSSQL capabilities written in Python
-- [PXETheif](https://github.com/MWR-CyberSec/PXEThief)
+- [PXEThief](https://github.com/MWR-CyberSec/PXEThief)
