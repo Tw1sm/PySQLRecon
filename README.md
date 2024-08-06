@@ -84,7 +84,7 @@ Target execution of a PySQLRecon command on a linked server (instead of the SQL 
 
 Impersonate a user account while running a PySQLRecon command with the `--impersonate` flag.
 
-`--link` and `--impersonate` and incompatible.
+`--link` and `--impersonate` are incompatible.
 
 ## Development
 pysqlrecon uses Poetry to manage dependencies. Install from source and setup for development with:
