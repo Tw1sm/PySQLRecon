@@ -14,7 +14,7 @@ IMPERSONATE_COMPATIBLE = True
 def main(
     ctx:            typer.Context,
     id:             str = typer.Option(..., "--adminid", help="AdminID of the user to demote/remove"),
-    permissions:    str = typer.Option("00000000|00000000", "--sid", help="Permissions to remove (default will remove all permissions and account)")):
+    permissions:    str = typer.Option("00000000|00000000", "--permissions", help="Permissions to remove (default will remove all permissions and account)")):
     
     pysqlrecon: PySqlRecon = ctx.obj['pysqlrecon']
     use_basic_tables = ctx.obj['basic_tables']

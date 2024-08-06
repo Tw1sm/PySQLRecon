@@ -111,7 +111,7 @@ def main(
         if sms0001  : existing_privs += "SMS00001|SMS0001R,"
 
         if existing_privs != "":
-            logger.info(f"Restore original permissions with pysqlrecon [OPTIONS] sccm removeadmin --user {id} --permissions '{existing_privs[:-1]}'")
+            logger.info(f"Restore original permissions with pysqlrecon [OPTIONS] sccm removeadmin --adminid {id} --permissions '{existing_privs[:-1]}'")
 
     #
     # No entries found, add new entry
@@ -139,7 +139,7 @@ def main(
 
         id = pysqlrecon.get_last_resp(attr="AdminID")
         logger.info(f"User added with ID: {id}")
-        logger.info(f"Remove with pysqlrecon [OPTIONS] sccm removeadmin --user {id} --permissions '00000000|00000000'")
+        logger.info(f"Remove with pysqlrecon [OPTIONS] sccm removeadmin --adminid {id} --permissions '00000000|00000000'")
 
     #
     # Add permissions
