@@ -86,6 +86,13 @@ Impersonate a user account while running a PySQLRecon command with the `--impers
 
 `--link` and `--impersonate` are incompatible.
 
+### Usage with `ntlmrelayx`
+PySQLRecon can be used with `proxychains` to take advantage of relayed authentication targeting a `mssql://` service. Due to the way ntlmrelayx sessions work, the `--database` parameter will not be respected when running PySQLRecon (the relay session will always be connected to the master database). This can come into play especially when using SCCM modules, which require the site database to be sepecified. To fix this, first change the database context using the `query` module (this will persist across any subsequent PySQLRecon usage, with the same relay session). Example:
+```
+proxychains4 pysqlrecon -t <target> -d <DOMAIN> -u <username> -p FAKE query --query 'use new_db_name'
+```
+You can now run modules/queries that target resources within that specifc database, even without specifying `--database`, from the same `ntlmrelayx` session.
+
 ## Development
 pysqlrecon uses Poetry to manage dependencies. Install from source and setup for development with:
 ```
