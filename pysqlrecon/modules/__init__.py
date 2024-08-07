@@ -3,6 +3,7 @@ from pysqlrecon.modules import checkrpc, columns, databases, impersonate, info, 
                                 enablexp, disablexp, xpcmd, enablerpc, disablerpc, enableole,\
                                 disableole, enableclr, disableclr, olecmd, agentstatus, agentcmd, \
                                 clr, adsi, sample
+from pysqlrecon.modules import sccm
 
 __all__ = [
     checkrpc,
@@ -34,5 +35,8 @@ __all__ = [
     olecmd,
     agentstatus,
     agentcmd,
-    adsi
+    adsi,
+
+    # sccm submodule
+    sccm
 ]

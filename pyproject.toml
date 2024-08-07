@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysqlrecon"
-version = "0.2.1"
+version = "0.3.0"
 description = "Offensive MSSQL Python toolkit"
 authors = ["Matt Creel <mcreel31@gmail.com>"]
 readme = "README.md"
@@ -12,6 +12,7 @@ python = "^3.11"
 rich = "^12.5.1"
 typer = "^0.6.1"
 impacket = "^0.11.0"
+pycryptodome = "^3.20.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.235"
