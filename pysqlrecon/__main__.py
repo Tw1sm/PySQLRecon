@@ -57,6 +57,10 @@ def main(
         logger.warning("Cannot use --impersonate and --link together")
         exit()
 
+    if not sql_auth and domain is None:
+        logger.warning("Windows authentication requires a domain specified with -d/--domain")
+        exit()
+
     # accesing a link may require Kerberos auth
     if link is not None and kerberos is False:
         logger.warning("Querying a linked server may require specifying Kerberos authentication")
