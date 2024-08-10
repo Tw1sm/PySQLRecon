@@ -9,6 +9,8 @@ PySQLRecon
 
 PySQLRecon is a Python port of the awesome [SQLRecon](https://github.com/skahwah/SQLRecon) project by [@sanjivkawa](https://twitter.com/sanjivkawa). See the [commands](#commands) section for a list of capabilities.
 
+[Post](https://tw1sm.substack.com/p/takeover-1-with-pysqlrecon) demonstrating SCCM TAKEOVER-1 with PySQLRecon.
+
 ## Install
 PySQLRecon can be installed with `pip3 install pysqlrecon` or by cloning this repository and running `pip3 install .`
 
