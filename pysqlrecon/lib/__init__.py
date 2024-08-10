@@ -8,9 +8,10 @@ from pysqlrecon.lib.sqlagent import SqlAgentMixin
 from pysqlrecon.lib.clr import ClrMixin
 from pysqlrecon.lib.module import ModuleMixin
 from pysqlrecon.lib.query import QueryMixin
+from pysqlrecon.lib.sccm import SccmMixin
 
 
-class PySqlRecon(SqlAgentMixin, ClrMixin, ModuleMixin, QueryMixin):
+class PySqlRecon(SqlAgentMixin, ClrMixin, ModuleMixin, QueryMixin, SccmMixin):
 
     # https://learn.microsoft.com/en-us/sql/relational-databases/errors-events/database-engine-events-and-errors-6000-to-6999?view=sql-server-ver16
     DUPLICATE_ASM_ERROR = 6285
