@@ -1,4 +1,8 @@
 # Changelog
+## [v0.3.1] - 1/11/2024
+### Added
+- Added a query to check the `ExtendedProtection` registry value in the Info module
+
 ## [v0.3.0] - 08/05/2024
 ### Added
 - SCCM modules from [SQLRecon](https://github.com/skahwah/SQLRecon?tab=readme-ov-file#sccm-modules)

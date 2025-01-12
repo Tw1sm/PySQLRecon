@@ -1,4 +1,5 @@
 import typer
+from enum import Enum
 
 from pysqlrecon.logger import logger, console
 from pysqlrecon.lib import PySqlRecon
@@ -21,6 +22,7 @@ def main(ctx: typer.Context):
         'ServiceAccount': '',
         'AuthenticationMode': '',
         'ForcedEncryption': '',
+        'ExtendedProtection': '',
         'Clustered': '',
         'SqlServerVersionNumber': '',
         'SqlServerMajorVersion': '',
@@ -84,12 +86,12 @@ def main(ctx: typer.Context):
             "DECLARE @SQLServerInstance varchar(250)\n" \
             "if @@SERVICENAME = 'MSSQLSERVER'\n" \
             "BEGIN\n" \
-            "set @SQLServerInstance = 'SYSTEM\CurrentControlSet\Services\MSSQLSERVER'\n" \
+            "set @SQLServerInstance = 'SYSTEM\\CurrentControlSet\\Services\\MSSQLSERVER'\n" \
             "set @SQLServerServiceName = 'MSSQLSERVER'\n" \
             "END\n" \
             "ELSE\n" \
             "BEGIN\n" \
-            "set @SQLServerInstance = 'SYSTEM\CurrentControlSet\Services\MSSQL$'+cast(@@SERVICENAME as varchar(250))\n" \
+            "set @SQLServerInstance = 'SYSTEM\\CurrentControlSet\\Services\\MSSQL$'+cast(@@SERVICENAME as varchar(250))\n" \
             "set @SQLServerServiceName = 'MSSQL$'+cast(@@SERVICENAME as varchar(250))\n" \
             "END\n" \
             "SELECT @SQLServerServiceName;"
@@ -101,11 +103,11 @@ def main(ctx: typer.Context):
     query = "DECLARE @SQLServerInstance varchar(250)\n" \
             "if @@SERVICENAME = 'MSSQLSERVER'\n" \
             "BEGIN\n" \
-            "set @SQLServerInstance = 'SYSTEM\CurrentControlSet\Services\MSSQLSERVER'\n" \
+            "set @SQLServerInstance = 'SYSTEM\\CurrentControlSet\\Services\\MSSQLSERVER'\n" \
             "END\n" \
             "ELSE\n" \
             "BEGIN\n" \
-            "set @SQLServerInstance = 'SYSTEM\CurrentControlSet\Services\MSSQL$'+cast(@@SERVICENAME as varchar(250))\n" \
+            "set @SQLServerInstance = 'SYSTEM\\CurrentControlSet\\Services\\MSSQL$'+cast(@@SERVICENAME as varchar(250))\n" \
             "END\n" \
             "DECLARE @ServiceAccountName varchar(250)\n" \
             "EXECUTE master.dbo.xp_instance_regread\n" \
@@ -120,7 +122,7 @@ def main(ctx: typer.Context):
     # AuthenticationMode
     query = "DECLARE @AuthenticationMode INT\n" \
             "EXEC master.dbo.xp_instance_regread N'HKEY_LOCAL_MACHINE',\n" \
-            "N'Software\Microsoft\MSSQLServer\MSSQLServer',\n" \
+            "N'Software\\Microsoft\\MSSQLServer\\MSSQLServer',\n" \
             "N'LoginMode', @AuthenticationMode OUTPUT\n" \
             "(SELECT CASE @AuthenticationMode\n" \
             "WHEN 1 THEN 'Windows Authentication'\n" \
@@ -135,14 +137,28 @@ def main(ctx: typer.Context):
     query = "BEGIN TRY\n" \
             "DECLARE @ForcedEncryption INT\n" \
             "EXEC master.dbo.xp_instance_regread N'HKEY_LOCAL_MACHINE',\n" \
-            "N'SOFTWARE\MICROSOFT\Microsoft SQL Server\MSSQLServer\SuperSocketNetLib',\n" \
+            "N'SOFTWARE\\MICROSOFT\\Microsoft SQL Server\\MSSQLServer\\SuperSocketNetLib',\n" \
             "N'ForceEncryption', @ForcedEncryption OUTPUT\n" \
             "END TRY\n" \
             "BEGIN CATCH	            \n" \
             "END CATCH\n" \
             "SELECT @ForcedEncryption;"
     pysqlrecon.query_handler(query)
-    info['ForcedEncryption'] = pysqlrecon.get_last_resp()
+    info['ForcedEncryption'] = ForcedEncryption(pysqlrecon.get_last_resp()).name.title()
+
+    ####
+    # ExtendedProtection
+    query = "BEGIN TRY\n" \
+            "DECLARE @ExtendedProtection INT\n" \
+            "EXEC master.dbo.xp_instance_regread N'HKEY_LOCAL_MACHINE',\n" \
+            "N'SOFTWARE\\MICROSOFT\\Microsoft SQL Server\\MSSQLServer\\SuperSocketNetLib',\n" \
+            "N'ExtendedProtection', @ExtendedProtection OUTPUT\n" \
+            "END TRY\n" \
+            "BEGIN CATCH	            \n" \
+            "END CATCH\n" \
+            "SELECT @ExtendedProtection;"
+    pysqlrecon.query_handler(query)
+    info['ExtendedProtection'] = ExtendedProtection(pysqlrecon.get_last_resp()).name.title()
 
     ####
     # Clustered
@@ -190,8 +206,8 @@ def main(ctx: typer.Context):
         query = "DECLARE @MachineType  SYSNAME\n" \
                 "EXECUTE master.dbo.xp_regread\n" \
                 "@rootkey		= N'HKEY_LOCAL_MACHINE',\n" \
-                "@key			= N'SYSTEM\CurrentControlSet\Control\ProductOptions',\n" \
-                "@value_name		= N'ProductType',\n" \
+                "@key			= N'SYSTEM\\CurrentControlSet\\Control\\ProductOptions',\n" \
+                "@value_name	= N'ProductType',\n" \
                 "@value			= @MachineType output\n" \
                 "SELECT @MachineType;"
         pysqlrecon.query_handler(query)
@@ -203,8 +219,8 @@ def main(ctx: typer.Context):
         query = "DECLARE @ProductName  SYSNAME\n" \
                 "EXECUTE master.dbo.xp_regread\n" \
                 "@rootkey		= N'HKEY_LOCAL_MACHINE',\n" \
-                "@key			= N'SOFTWARE\Microsoft\Windows NT\CurrentVersion',\n" \
-                "@value_name		= N'ProductName',\n" \
+                "@key			= N'SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion',\n" \
+                "@value_name	= N'ProductName',\n" \
                 "@value			= @ProductName output\n" \
                 "SELECT @ProductName;"
         pysqlrecon.query_handler(query)
@@ -235,3 +251,14 @@ def main(ctx: typer.Context):
     print()
 
     pysqlrecon.disconnect()
+
+
+class ForcedEncryption(Enum):
+    OFF = 0
+    ON  = 1
+
+
+class ExtendedProtection(Enum):
+    OFF         = 0
+    ALLOWED     = 1
+    REQUIRED    = 2
