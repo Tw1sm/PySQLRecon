@@ -96,12 +96,16 @@ proxychains4 pysqlrecon -t <target> -d <DOMAIN> -u <username> -p FAKE query --qu
 You can now run modules/queries that target resources within that specifc database, even without specifying `--database`, from the same `ntlmrelayx` session.
 
 ## Development
-pysqlrecon uses Poetry to manage dependencies. Install from source and setup for development with:
+pysqlrecon uses uv to manage dependencies. Install from source and setup for development with:
 ```
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install pysqlrecon
 git clone https://github.com/tw1sm/pysqlrecon
 cd pysqlrecon
-poetry install
-poetry run pysqlrecon --help
+uv sync
+uv run pysqlrecon --help
 ```
 
 ### Adding a Command
