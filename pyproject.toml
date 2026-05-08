@@ -1,30 +1,47 @@
-[tool.poetry]
+[project]
 name = "pysqlrecon"
 version = "0.3.1"
 description = "Offensive MSSQL Python toolkit"
-authors = ["Matt Creel <mcreel31@gmail.com>"]
+authors = [{ name = "Matt Creel", email = "mcreel31@gmail.com" }]
+requires-python = ">=3.11,<4"
 readme = "README.md"
-homepage = "https://github.com/tw1sm/pysqlrecon"
-repository = "https://github.com/tw1sm/pysqlrecon"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "rich>=12.5.1,<13",
+    "typer>=0.6.1,<0.7",
+    "impacket>=0.11.0,<0.12",
+    "pycryptodome>=3.20.0,<4",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-rich = "^12.5.1"
-typer = "^0.6.1"
-impacket = "^0.11.0"
-pycryptodome = "^3.20.0"
+[project.urls]
+Homepage = "https://github.com/tw1sm/pysqlrecon"
+Repository = "https://github.com/tw1sm/pysqlrecon"
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.0.235"
-pytest = "^7.2.1"
-pre-commit = "^3.0.1"
+[project.scripts]
+pysqlrecon = "pysqlrecon.__main__:app"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.0.235,<0.0.236",
+    "pytest>=7.2.1,<8",
+    "pre-commit>=3.0.1,<4",
+]
+
+[tool.uv]
+default-groups = "all"
+
+[tool.uv.build-backend]
+module-root = ""
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.10.9,<0.11.0"]
+build-backend = "uv_build"
 
 [tool.ruff]
 ignore = ["E501"]
-
-[tool.poetry.scripts]
-pysqlrecon = "pysqlrecon.__main__:app"
